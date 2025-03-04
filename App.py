@@ -11,12 +11,16 @@ All changes are stored to a temporary working dataframe.
 Users have to open a file first, otherwise a warning message is shown.
 
 The code has comments.
-The file exists in a virtual environment.
+The file exists in a virtual environment. (python -m venv myvenv) (.\myvenv\scripts\activate)
 It is backed up at GitHub.
 
-Pyinstaller is used to convert the whole code into an .exe file (with an icon)
-(pyinstaller app.py --noconsole  --add-data "D:\Matrix\Tkinter_GUI_App\graphic;graphic/"  --icon=myicon1.ico --onefile)
-auto-py-to-exe
+PyInstaller is used to convert the programme into a single exe file.
+
+pyinstaller --onefile --windowed --add-data "blue_banner.png;." --add-data "brand.png;." --icon=myicon.ico app.py
+
+pyinstaller problem solved:
+https://www.youtube.com/watch?v=p3tSLatmGvU 
+
 """
 
 from tkinter import *
@@ -27,6 +31,37 @@ import numpy as np
 from PIL import Image, ImageTk
 from tkinter.filedialog import asksaveasfile 
 
+
+# We define the resource_path so the Pyinstaller can create an exe file
+# It allows pyinstaller to find png files in the temporary _MEIPASS directory
+# Paths to png files must be changed in the whole code appropriately 
+import os
+import sys
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+"""
+import os
+import sys
+
+if getattr(sys, 'frozen', False):
+    # Running as a bundled exe
+    base_path = sys._MEIPASS
+else:
+    # Running as a script
+    base_path = os.path.abspath(".")
+
+blue_banner_path = os.path.join(base_path, "blue_banner.png")
+brand_path = os.path.join(base_path, "brand.png")
+
+"""
+
 global id_entry, surname_entry, name_entry, suffix_entry, email_entry, phone_entry
 global id1, surname1, name1, suffix1, email1, phone1
 global validate_adding
@@ -36,7 +71,7 @@ logapp = tk.Tk()
 logapp.title("Login App")
 logapp.geometry("300x350")
 logapp.configure(bg='DeepSkyBlue2')
-bg = PhotoImage(file = "graphic/blue_banner1.png") 
+bg = PhotoImage(file = resource_path("blue_banner.png")) 
 label1 = Label(logapp, image = bg) 
 label1.place(x = 0, y = 0) 
 
@@ -69,7 +104,7 @@ def start_program():
         root.geometry("1100x500")
         root.configure(bg='DeepSkyBlue2')           
                
-        bg = PhotoImage(file = "graphic/blue_banner1.png") 
+        bg = PhotoImage(file = resource_path("blue_banner.png")) 
         label1 = Label( root, image = bg) 
         label1.place(x = 0, y = 0) 
 
@@ -80,7 +115,7 @@ def start_program():
         frame2.pack(side="right", padx=10, pady=10)   
 
         # LOGO
-        image = Image.open('graphic/brand1.png')
+        image = Image.open(resource_path('brand.png'))           
         image = ImageTk.PhotoImage(image)
         image_label = tk.Label(frame1, image=image)
         image_label.pack(side = "top", padx=20, pady=20)
