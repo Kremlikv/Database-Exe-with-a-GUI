@@ -14,12 +14,17 @@ The code has comments.
 The file exists in a virtual environment. (python -m venv myvenv) (.\myvenv\scripts\activate)
 It is backed up at GitHub.
 
-PyInstaller is used to convert the programme into a single exe file.
+***
+
+PyInstaller is used to convert the programme into a single .exe file.
 
 pyinstaller --onefile --windowed --add-data "blue_banner.png;." --add-data "brand.png;." --icon=myicon.ico app.py
 
 pyinstaller problem solved:
 https://www.youtube.com/watch?v=p3tSLatmGvU 
+https://stackoverflow.com/questions/31836104/pyinstaller-and-onefile-how-to-include-an-image-in-the-exe-file
+
+Since the Exe file uses a sys import, the exit function must be sys.exit()
 
 """
 
@@ -196,9 +201,8 @@ def start_program():
             tk.messagebox.showinfo("Info", "Changes saved to CSV") 
 
         # MENU - QUITTING 
-        def quitting():
-            quit()
-            exit() 
+        def quitting():            
+            sys.exit()
 
         def sorting_validation():
             try: 
