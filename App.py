@@ -20,11 +20,11 @@ PyInstaller is used to convert the programme into a single .exe file.
 
 pyinstaller --onefile --windowed --add-data "blue_banner.png;." --add-data "brand.png;." --icon=myicon.ico app.py
 
-pyinstaller problem solved:
+pyinstaller add-data problem solved:
 https://www.youtube.com/watch?v=p3tSLatmGvU 
 https://stackoverflow.com/questions/31836104/pyinstaller-and-onefile-how-to-include-an-image-in-the-exe-file
 
-Since the Exe file uses a sys import, the exit function must be sys.exit()
+Since the Exe file uses a sys import, the exit function must be sys.exit() not just exit().
 
 """
 
@@ -51,21 +51,6 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
-"""
-import os
-import sys
-
-if getattr(sys, 'frozen', False):
-    # Running as a bundled exe
-    base_path = sys._MEIPASS
-else:
-    # Running as a script
-    base_path = os.path.abspath(".")
-
-blue_banner_path = os.path.join(base_path, "blue_banner.png")
-brand_path = os.path.join(base_path, "brand.png")
-
-"""
 
 global id_entry, surname_entry, name_entry, suffix_entry, email_entry, phone_entry
 global id1, surname1, name1, suffix1, email1, phone1
